@@ -23,6 +23,8 @@ async function run() {
     await client.connect();
     const productCollection = client.db('NikeWarehouse').collection('Product');
 
+
+    // READ OR GET
     app.get('/product', async (req, res) => {
       const query = {};
       const cursor = productCollection.find(query);
@@ -37,10 +39,33 @@ async function run() {
       res.send(product);
     })
 
-    // POST
+    // POST OR CREATE
     app.post('/product', async (req, res) => {
       const newProduct = req.body;
       const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    })
+
+    // UPDATE OR PUT
+    app.put('/product/:id', async (req, res) => {
+      const id = req.params.id;
+      const newProduct = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          quantity: newProduct.quantity
+        }
+      };
+      const result = await productCollection.updateOne(filter, updatedDoc, options);
+      res.send(result);
+    })
+
+    // DELETE
+    app.delete('/product/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.deleteOne(query);
       res.send(result);
     })
   }

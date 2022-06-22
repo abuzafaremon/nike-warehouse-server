@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const jwt = require('jsonWebToken');
+// const jwt = require('jsonWebToken');
 require('dotenv').config();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
@@ -25,13 +25,13 @@ async function run() {
     const productCollection = client.db('NikeWarehouse').collection('Product');
 
     // AUTH 
-    app.post('/login', async (req, res) => {
-      const user = req.body;
-      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1d'
-      })
-      res.send({ accessToken });
-    })
+    // app.post('/login', async (req, res) => {
+    //   const user = req.body;
+    //   const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    //     expiresIn: '1d'
+    //   })
+    //   res.send({ accessToken });
+    // })
 
     // READ OR GET
     app.get('/product', async (req, res) => {

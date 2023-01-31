@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-  res.send('Hello Word!')
+  res.send('Hello from nike wirehouse');
 })
 
 
